@@ -1,5 +1,5 @@
-const cryptoRandomString = require('crypto-random-string');
-const ethers = require('ethers').ethers;
+import * as cryptoRandomString from 'crypto-random-string';
+import { ethers } from 'ethers';
 
 async function run() {
     const chainUrl = 'http://127.0.0.1:22000';
