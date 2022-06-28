@@ -1,18 +1,13 @@
-import * as cryptoRandomString from 'crypto-random-string';
-import { ethers } from 'ethers';
+import * as dotenv from 'dotenv';
+import { getSalt } from './src/salt';
+import { createKeystore, getAddressFromKeystore } from './src/ethers';
+dotenv.config();
 
 async function run() {
-    const chainUrl = 'http://127.0.0.1:22000';
-    const getSalt = (saltLength) => {
-        return cryptoRandomString({ length: saltLength || 8 });
-    };
-    
-    const provider = new ethers.providers.JsonRpcProvider(chainUrl);
-    console.log(provider);
-    const wallet = await ethers.Wallet.createRandom();
     const salt = getSalt(8);
-    const keystore = await wallet.encrypt(salt || '');
-    console.log(keystore);
+    const keystore = await createKeystore(salt);
+    const address = getAddressFromKeystore(JSON.parse(keystore) as { address: string });
+    console.log(address);
 }
 
 run();
